@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class = 'content-section'>
+        <div class = "media">
+            <img class = "rounded-circle account-img" src="{{ imageFile }}">
+            {% if user == current_user %}
+            <div class = "media-body">
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p class="text-secondary">{{ current_user.email }}</p>
+                <div>
+                    <a class = "btn btn-outline-info" href="{{ url_for('update') }}">Update Info</a>
+                </div>
+            </div>
+            {% else %}
+            <div class = "media-body">
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+            {% endif %}
+
+            <p class="account-heading">Posts</p>
+
+            {% for post in user.posts %}
+            <div class = "container">
+                <article class="media content-section">
+                    <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{ post.author.username }}</a>
+                        <small class="text-muted">{{ post.datePosted }}</small>
+                    </div>
+                    <h2><a class="article-title" href="{{ url_for('viewPost', postId = post.id) }}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
